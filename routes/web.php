@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 
@@ -9,6 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/blogs', [BlogController::class, 'index']);
+
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
 
 Route::view('dashboard', 'dashboard')

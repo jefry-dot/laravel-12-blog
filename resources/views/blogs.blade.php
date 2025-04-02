@@ -39,6 +39,7 @@
                 <tr class="bg-gray-200 text-left">
                     <th class="border border-gray-300 p-2">#</th>
                     <th class="border border-gray-300 p-2">Title</th>
+                    <th class="border border-gray-300 p-2">Author</th>
                     <th class="border border-gray-300 p-2 text-center">Action</th>
                 </tr>
             </thead>
@@ -47,6 +48,7 @@
                 <tr class="hover:bg-gray-100">
                     <td class="border border-gray-300 p-2">{{ ($blogs->currentPage() - 1) * $blogs->perPage() + $index + 1 }}</td>
                     <td class="border border-gray-300 p-2">{{ $blog->title }}</td>
+                    <td class="border border-gray-300 p-2">{{ $blog->user->name ?? 'Guest' }}</td>
                     <td class="border border-gray-300 p-2 text-center">
                         <a href="{{ route('blogs.view', $blog->id) }}" class="text-green-500 hover:underline">view</a> |
                         <a href="{{ route('blogs.edit', $blog->id) }}" class="text-blue-500 hover:underline">edit</a> |

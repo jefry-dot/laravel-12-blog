@@ -1,9 +1,10 @@
 <?php
-
+use App\Http\Controllers\CommentController;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,5 +34,12 @@ Route::get('/blogs/{id}', [BlogController::class, 'view'])->name('blogs.view');
 
 
 
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Tambah user
+    Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Simpan user baru
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::post('/blogs/{blog_id}/comment', [CommentController::class, 'store'])->name('comments.store');
 
 require __DIR__.'/auth.php';

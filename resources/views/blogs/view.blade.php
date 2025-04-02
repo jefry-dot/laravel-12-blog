@@ -23,7 +23,7 @@
                 <div class="flex items-center space-x-4 mb-4">
                     
                     <div>
-                        <p class="font-medium text-gray-900">John Doe</p>
+                        <p class="font-medium text-gray-900">{{ $blog->user->name ?? 'Guest' }}</p>
                         <div class="flex space-x-2 text-sm text-gray-500">
                             <time>{{ $blog->created_at->format('M d, Y') }}</time>
                             <span>•</span>
@@ -80,7 +80,36 @@
                 </div>
             </div>
         </article>
-
+        <section class="bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-xl font-bold mb-6">Komentar</h3>
         
+            <!-- List Komentar -->
+            <div class="space-y-6">
+                @foreach ($blog->comments as $comment)
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-medium">{{ $comment->user->name ?? 'Anonim' }}</span>
+                                    <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <p class="text-gray-600">{{ $comment->content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        
+            <!-- Form Tambah Komentar -->
+            <form action="{{ route('comments.store', $blog->id) }}" method="POST" class="mt-6">
+                @csrf
+                <textarea name="content" rows="3" class="w-full border rounded-lg p-2" placeholder="Tambahkan komentar..."></textarea>
+                <button type="submit" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Kirim Komentar
+                </button>
+            </form>
+        </section>
+        
+    </main>
 </body>
 </html>

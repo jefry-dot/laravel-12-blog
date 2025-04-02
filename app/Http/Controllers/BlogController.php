@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -8,24 +10,20 @@ use Illuminate\Support\Facades\DB;
 class BlogController extends Controller
 {
     public function index(Request $request)
-    {
-        
+{
+    $query = Blog::with('user'); // Load relasi user
 
-        $query = DB::table('blogs');
-
-        // Ambil keyword dari input pencarian
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('content', 'LIKE', "%{$search}%");
-        }
-
-        // Ambil data dengan pagination
-        $blogs = $query->orderBy('id', 'desc')->paginate(10);
-        $blogs->appends(['offset' => ($request->input('page', 1) - 1) * 10]);
-
-        return view('blogs', compact('blogs'));
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where('title', 'LIKE', "%{$search}%")
+              ->orWhere('content', 'LIKE', "%{$search}%");
     }
+
+    $blogs = $query->orderBy('id', 'desc')->paginate(10);
+
+    return view('blogs', compact('blogs'));
+}
+
 
 
     public function create()
@@ -35,19 +33,21 @@ class BlogController extends Controller
 
     // Menyimpan data ke database
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-        ]);
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'reading_time' => 'required|integer',
+        'category' => 'required|string',
+    ]);
 
-        Blog::create([
-            'title' => $request->title,
-            'content' => $request->content,
-        ]);
+    // Jika user tidak login, user_id = null
+    $blog = new Blog($validated);
+    $blog->user_id = auth()->id;
+    $blog->save();
 
-        return redirect('/blogs')->with('success', 'Blog berhasil ditambahkan!');
-    }
+    return redirect()->route('blogs.index')->with('success', 'Blog berhasil dibuat!');
+}
 
     public function edit($id)
 {
@@ -86,7 +86,7 @@ public function view($id)
 {
     // Ambil data blog berdasarkan ID
     $blog = Blog::findOrFail($id);
-
+    $blog = Blog::with('user', 'comments.user')->findOrFail($id);
     // Kirim data ke tampilan
     return view('blogs.view', compact('blog'));
 }

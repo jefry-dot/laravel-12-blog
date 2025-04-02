@@ -12,19 +12,5 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('blogs')->insert([
-            [
-                'title' => 'Belajar Laravel Dasar',
-                'content' => 'Laravel adalah framework PHP yang sangat powerful...',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title' => 'Cara Membuat Blog dengan Laravel',
-                'content' => 'Pada tutorial ini kita akan membuat blog sederhana menggunakan Laravel...',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 }

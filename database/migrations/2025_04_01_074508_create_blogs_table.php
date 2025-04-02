@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); // nullable
             $table->timestamps();
         });
     }
-
+    
     public function down()
     {
         Schema::dropIfExists('blogs');

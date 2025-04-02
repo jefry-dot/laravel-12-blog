@@ -8,20 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
+
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    use HasFactory; // Tambahkan ini
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'phone_id',
     ];
 
     /**
@@ -56,5 +48,16 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+    public function phone()
+    {
+        return $this->hasOne(Phone::class, 'user_id');
+        
+    }
+    protected $with = ['phone']; // Agar nomor HP selalu dimuat
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
     }
 }

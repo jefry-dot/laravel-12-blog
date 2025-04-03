@@ -11,7 +11,7 @@
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h1 class="text-2xl font-bold text-gray-700 mb-4 text-center">Edit Blog</h1>
 
-        <form action="{{ route('blogs.update', $blog->id) }}" method="POST">
+        <form action="{{ route('blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -60,6 +60,15 @@
                         </label>
                     @endforeach
                 </div>
+            </div>
+
+            @if($blog->thumbnail)
+              <img src="{{ asset('storage/' . $blog->thumbnail) }}" 
+                alt="Thumbnail" class="w-full h-64 object-cover rounded-xl shadow-md mb-6">
+            @endif
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold">Thumbnail</label>
+                <input type="file" name="thumbnail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
 
             <!-- Tombol Aksi -->

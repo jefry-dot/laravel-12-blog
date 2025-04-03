@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ route('blogs.store') }}" method="POST">
+        <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <label for="title" class="block text-gray-700 font-bold mb-2">Judul Blog:</label>
@@ -61,8 +61,16 @@
                 </div>
             </div>
 
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold">Thumbnail</label>
+                <input type="file" name="thumbnail" accept="image/*"
+                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+            </div>
+            
+
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
             <a href="{{ url('/blogs') }}" class="ml-2 text-gray-600">Batal</a>
+
         </form>
     </div>
 

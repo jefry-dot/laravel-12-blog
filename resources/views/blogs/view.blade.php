@@ -44,7 +44,11 @@
                     @endforeach
                 </div>
             </div>
-
+<!-- Featured Image -->
+@if ($blog->thumbnail)
+    <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-full rounded-lg mb-6" alt="Thumbnail">
+@endif
+            
             <!-- Content -->
             <div class="prose max-w-none mb-12">
                 {{ $blog->content }}

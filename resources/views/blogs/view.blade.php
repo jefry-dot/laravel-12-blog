@@ -35,10 +35,13 @@
                 <h1 class="text-4xl font-bold font-playfair text-gray-900 mb-4 leading-tight">
                     {{ $blog->title }}
                 </h1>
-                
+                {{-- tag  --}}
                 <div class="flex space-x-2">
-                    <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Teknologi</span>
-                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">Web Development</span>
+                    @foreach($blog->tags as $tag)
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
+                            {{ $tag->name }}
+                        </span>
+                    @endforeach
                 </div>
             </div>
 

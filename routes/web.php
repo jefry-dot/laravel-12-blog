@@ -10,7 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/blogs', [BlogController::class, 'index']);
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+
 
 
 Route::view('dashboard', 'dashboard')

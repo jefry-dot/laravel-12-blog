@@ -34,6 +34,33 @@
                 <textarea name="content" id="content" rows="5" class="w-full px-4 py-2 border rounded-lg" required></textarea>
             </div>
 
+            <div class="mb-4">
+                <label for="reading_time" class="block text-gray-700 font-bold mb-2">Estimasi Waktu Baca (menit):</label>
+                <input type="number" name="reading_time" id="reading_time" class="w-full px-4 py-2 border rounded-lg" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="block text-gray-700 font-bold mb-2">Kategori:</label>
+                <select name="category" id="category" class="w-full px-4 py-2 border rounded-lg" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="Teknologi">Teknologi</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="AI">Artificial Intelligence</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Tags:</label>
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($tags as $tag)
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" class="rounded">
+                            <span>{{ $tag->name }}</span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
             <a href="{{ url('/blogs') }}" class="ml-2 text-gray-600">Batal</a>
         </form>
